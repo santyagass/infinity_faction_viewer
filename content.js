@@ -9,6 +9,46 @@ chrome.runtime.onMessage.addListener(
 	}
 );
 
+var libr =
+	{
+		101: {count: 0, title: "•PanOceania", color: '#009ee4'},
+		102: {count: 0, title: "•SAA", color: '#00a5ee'},
+		103: {count: 0, title: "•MO", color: '#0091d0'},
+		104: {count: 0, title: "•Neoterra", color: '#9e9ce4'},
+		105: {count: 0, title: "•Varuna", color: '#6ad7fc'},
+		201: {count: 0, title: "•Yu Jing", color: '#b0cb11'},
+		202: {count: 0, title: "•ISS", color: '#6c7c0a'},
+		204: {count: 0, title: "•IA", color: '#d9fa15'},
+		301: {count: 0, title: "•Ariadna", color: '#0b7db3'},
+		302: {count: 0, title: "•Caledonians", color: '#0c8ecb'},
+		303: {count: 0, title: "•FRRM", color: '#0d97d9'},
+		304: {count: 0, title: "•USAriadna", color: '#0d9ce0'},
+		305: {count: 0, title: "•Tartary AC", color: '#0ea3ea'},
+		401: {count: 0, title: "•Haqqislam", color: '#ffe149'},
+		402: {count: 0, title: "•Hassassin Bahram", color: '#e8cd42'},
+		403: {count: 0, title: "•Qapu Khalqi", color: '#d6bd3c'},
+		404: {count: 0, title: "•Ramah", color: '#cfa12d'},
+		501: {count: 0, title: "•Nomads", color: '#e30b14'},
+		502: {count: 0, title: "•Corregidor", color: '#e34c31'},
+		503: {count: 0, title: "•Bakunin", color: '#e36b38'},
+		504: {count: 0, title: "•Tunguska", color: '#e38869'},
+		601: {count: 0, title: "•Combined Army", color: '#a69fd5'},
+		602: {count: 0, title: "•Morat AF", color: '#9791c2'},
+		603: {count: 0, title: "•Shasvastii", color: '#8a84b1'},
+		604: {count: 0, title: "•Onyx", color: '#777299'},
+		701: {count: 0, title: "•ALEPH", color: '#9baba8'},
+		702: {count: 0, title: "•Steel Phalanx", color: '#b8cac7'},
+		703: {count: 0, title: "•OSS", color: '#c5d9d5'},
+		801: {count: 0, title: "•Tohaa", color: '#a4e412'},
+		902: {count: 0, title: "•Druze BS", color: '#b6cb94'},
+		903: {count: 0, title: "•JSA", color: '#e31e45'},
+		904: {count: 0, title: "•Ikari", color: '#fffc1c'},
+		905: {count: 0, title: "•Starco", color: '#e45d5d'},
+		906: {count: 0, title: "•Spiral", color: '#b9db01'},
+		907: {count: 0, title: "•Foreign", color: '#67b4b5'},
+		908: {count: 0, title: "•Dahshat", color: '#cbbe7f'}
+	};
+
 function findFaction(nick) {
 	var factionImgPath = $('[aria-label^="'+ nick +'"]').siblings('.md-secondary-container').find('md-icon[aria-label="faction"]').attr('md-svg-src');
 	var code = factionImgPath.substr(factionImgPath.length - 7);
@@ -106,10 +146,10 @@ var Piechart = function(options){
 				labelY = this.canvas.height/2 + (offset + pieRadius / 2) * Math.sin(start_angle + slice_angle/2);
 			}
 
-			var labelText = val;//Math.round(100 * val / total_value);
+			var labelText = categ;//Math.round(100 * val / total_value);
 			this.ctx.fillStyle = "black";
-			this.ctx.font = "normal 12px Arial";
-			this.ctx.fillText(labelText/*+"%"*/, labelX,labelY);
+			this.ctx.font = "normal 9px Arial";
+			this.ctx.fillText(labelText +"("+ val +")", labelX,labelY);
 			start_angle += slice_angle;
 		}
 
@@ -125,26 +165,32 @@ var Piechart = function(options){
 };
 
 function func2() {
-	$('body').append('<div style="background-color: #fff; width: 600px; height: 400px; padding: 10px; position: fixed; top: 50px; left: 50px;"><canvas id="myCanvas" style="float: left;"></canvas><div id="myLegend" style="float: left; padding-left: 15px;"></div></div>');
+	$('body').append('<div style="background-color: #fff; width: 520px; height: 520px; padding: 10px; position: fixed; top: 50px; left: 50px;"><canvas id="myCanvas" style="float: left; padding-right: 40px;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
 
 	var myCanvas = document.getElementById("myCanvas");
-	myCanvas.width = 380;
-	myCanvas.height = 380;
+	myCanvas.width = 500;
+	myCanvas.height = 500;
 
 	var ctx = myCanvas.getContext("2d");
 
-	$('[ng-if="item.lists.faction"]').map(function() {
+	$('[ng-if="item.lists.faction"]').each(function() {
 		var factionImgPath = $(this).attr('md-svg-src');
 		var factionCode = factionImgPath.substr(factionImgPath.length - 7, 3);
-		console.log(factionCode);
+		if(libr[factionCode]) {
+			libr[factionCode].count = libr[factionCode].count ? libr[factionCode].count + 1 : 1;
+		} else {
+			libr[factionCode] = {count: 1, title: 'NEW ITEM!'};
+			console.error('We have new image id! ', factionCode);
+		}
 	});
-
-	var myVinyls = {
-		"PanOceania": 10,
-		"Yu Jing": 14,
-		"Ariadna": 2,
-		"Haqqislam": 12
-	};
+	var myVinyls = {};
+	var colors = [];
+	Object.keys(libr).forEach(function(elem, index) {
+		if(libr[elem].count != 0) {
+			myVinyls[libr[elem].title]=libr[elem].count;
+			colors.push(libr[elem].color);
+		}
+	})
 
 	var myLegend = document.getElementById("myLegend");
 
@@ -152,8 +198,8 @@ function func2() {
 		{
 			canvas:myCanvas,
 			data:myVinyls,
-			colors:["#009ee4","#b0cb11", "#e30b12","#ffe149"],
-			legend:myLegend
+			colors:colors,
+			// legend:myLegend
 		}
 	);
 	myDougnutChart.draw();
