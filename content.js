@@ -11,6 +11,7 @@ chrome.runtime.onMessage.addListener(
 
 var libr =
 	{
+		000: {count: 0, title: "•unknown", color: '#fefefe'},
 		101: {count: 0, title: "•PanOceania", color: '#009ee4'},
 		102: {count: 0, title: "•SAA", color: '#00a5ee'},
 		103: {count: 0, title: "•MO", color: '#0091d0'},
@@ -33,7 +34,7 @@ var libr =
 		503: {count: 0, title: "•Bakunin", color: '#e36b38'},
 		504: {count: 0, title: "•Tunguska", color: '#e38869'},
 		601: {count: 0, title: "•Combined Army", color: '#a69fd5'},
-		602: {count: 0, title: "•Morat AF", color: '#9791c2'},
+		602: {count: 0, title: "•Morats", color: '#9791c2'},
 		603: {count: 0, title: "•Shasvastii", color: '#8a84b1'},
 		604: {count: 0, title: "•Onyx", color: '#777299'},
 		701: {count: 0, title: "•ALEPH", color: '#9baba8'},
@@ -50,9 +51,14 @@ var libr =
 	};
 
 function findFaction(nick) {
-	var factionImgPath = $('[aria-label^="'+ nick +'"]').siblings('.md-secondary-container').find('md-icon[aria-label="faction"]').attr('md-svg-src');
-	var code = factionImgPath.substr(factionImgPath.length - 7);
-	return code;
+	var factionImgPath = $('[ng-repeat^="item in vm.participants|orderBy"] [aria-label^="'+ nick +'"] ~ .md-secondary-container md-icon[aria-label="faction"]').attr('md-svg-src');
+	console.log(factionImgPath);
+	if (factionImgPath !== undefined) {
+		var code = factionImgPath.substr(factionImgPath.length - 7, 3);
+		return code;
+	} else {
+		return "000";
+	}
 }
 
 function func() {
@@ -149,7 +155,9 @@ var Piechart = function(options){
 			var labelText = categ;//Math.round(100 * val / total_value);
 			this.ctx.fillStyle = "black";
 			this.ctx.font = "normal 9px Arial";
-			this.ctx.fillText(labelText +"("+ val +")", labelX,labelY);
+			this.ctx.shadowColor="white";
+			this.ctx.shadowBlur=3;
+			this.ctx.fillText(labelText + "("+ val +")", labelX,labelY);
 			start_angle += slice_angle;
 		}
 
@@ -165,13 +173,15 @@ var Piechart = function(options){
 };
 
 function func2() {
-	$('body').append('<div style="background-color: #fff; width: 520px; height: 520px; padding: 10px; position: fixed; top: 50px; left: 50px;"><canvas id="myCanvas" style="float: left; padding-right: 40px;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
+	$('body').append('<div style="position: relative; box-sizing: border-box; background-color: #fff; width: 520px; height: 520px; padding: 10px; position: fixed; top: 50px; left: 50px;"><canvas id="myCanvas" style="float: left;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
 
 	var myCanvas = document.getElementById("myCanvas");
 	myCanvas.width = 500;
 	myCanvas.height = 500;
 
 	var ctx = myCanvas.getContext("2d");
+
+	var gamerWithRosters = 0;
 
 	$('[ng-if="item.lists.faction"]').each(function() {
 		var factionImgPath = $(this).attr('md-svg-src');
@@ -182,15 +192,20 @@ function func2() {
 			libr[factionCode] = {count: 1, title: 'NEW ITEM!'};
 			console.error('We have new image id! ', factionCode);
 		}
+		gamerWithRosters++;
 	});
+	console.log(gamerWithRosters);
 	var myVinyls = {};
 	var colors = [];
+	if ($('[ng-repeat^="item in vm.participants|orderBy"]').length > gamerWithRosters) {
+		libr[000].count = $('[ng-repeat^="item in vm.participants|orderBy"]').length - gamerWithRosters;
+	}
 	Object.keys(libr).forEach(function(elem, index) {
 		if(libr[elem].count != 0) {
 			myVinyls[libr[elem].title]=libr[elem].count;
 			colors.push(libr[elem].color);
 		}
-	})
+	});
 
 	var myLegend = document.getElementById("myLegend");
 
