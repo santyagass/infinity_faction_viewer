@@ -173,7 +173,7 @@ var Piechart = function(options){
 };
 
 function func2() {
-	$('body').append('<div style="position: relative; box-sizing: border-box; background-color: #fff; width: 520px; height: 520px; padding: 10px; position: fixed; top: 50px; left: 50px;"><canvas id="myCanvas" style="float: left;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
+	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: 520px; height: 550px; padding: 10px; position: fixed; top: 50px; left: 50px;"><button onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();">Close</button><canvas id="myCanvas" style="float: left;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
 
 	var myCanvas = document.getElementById("myCanvas");
 	myCanvas.width = 500;
