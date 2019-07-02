@@ -5,18 +5,84 @@
 	<title>Title</title>
 	<style>
 		body {
-			padding: 10px 15px;
+			margin: 0;
+			padding: 10px;
 		}
 
 		button {
 			white-space: nowrap;
 		}
+
+		.container {
+			position: relative;
+			z-index: 0;
+			padding: 20px;
+			background: radial-gradient(circle farthest-side at 0% 50%, #f2fef4 23.5%, transparent 0) 14px 20px, radial-gradient(circle farthest-side at 0% 50%, #e3ede5 24%, transparent 0) 12.258px 20px, linear-gradient(#f2fef4 14%, transparent 0, transparent 85%, #f2fef4 0) 0 0, linear-gradient(150deg, #f2fef4 24%, #e3ede5 0, #e3ede5 26%, transparent 0, transparent 74%, #e3ede5 0, #e3ede5 76%, #f2fef4 0) 0 0, linear-gradient(30deg, #f2fef4 24%, #e3ede5 0, #e3ede5 26%, transparent 0, transparent 74%, #e3ede5 0, #e3ede5 76%, #f2fef4 0) 0 0, linear-gradient(90deg, #e3ede5 2%, #f2fef4 0, #f2fef4 98%, #e3ede5 0%) 0 0 #f2fef4;
+			background-size: 26.66px 40px;
+			box-shadow: inset -3px -3px 0px #EF781B, inset 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 15px 23px rgba(0, 0, 0, 0.25), inset 14px 0px 23px rgba(239, 141, 27, 0.25), inset -14px 0px 23px rgba(239, 141, 27, 0.25);
+		}
+
+		.container:before {
+			content: "";
+			position: absolute;
+			pointer-events: none;
+			z-index: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background-color: rgba(0,0,0,0.15);
+		}
+
+		.inner {
+			position: relative;
+			z-index: 1;
+		}
+
+		button {
+			position: relative;
+			display: block;
+			border: none;
+			padding: 9px 12px;
+			font-weight: bold;
+			width: 100%;
+			text-align: left;
+			background: #fff;
+			cursor: pointer;
+			outline: none;
+		}
+
+		button:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		button:hover:before {
+			background: #EF781B;
+		}
+
+		button:active {
+			box-shadow: inset 5px 5px 30px rgba(0, 0, 0, 0.15);
+		}
+
+		button:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			width: 3px;
+		}
 	</style>
 </head>
 <body>
-	<button id="show">Show icons in Classification</button><br>
-	<button id="createDiagram">Create diagram</button>
+	<div class="container">
+		<div class="inner">
+			<button id="show">Show icons in Classification</button>
+			<button id="createDiagram">Create diagram</button>
+		</div>
+	</div>
 
 	<script src="background.js"></script>
+	<script src="popup.js"></script>
 </body>
 </html>

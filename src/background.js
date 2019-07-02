@@ -9,7 +9,3 @@ document.getElementById("createDiagram").onclick = function() {
 		chrome.tabs.sendMessage(tabs[0].id, {greeting: "dia"}, function(response) {});
 	});
 };
-
-// document.getElementById("createDiagram").onclick = function() {
-
-// };

@@ -173,11 +173,11 @@ var Piechart = function(options){
 };
 
 function func2() {
-	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: 520px; height: 550px; padding: 10px; position: fixed; top: 50px; left: 50px;"><button onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();">Close</button><canvas id="myCanvas" style="float: left;"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
+	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: fixed; top: 10px; left: 10px;"><button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
 
 	var myCanvas = document.getElementById("myCanvas");
-	myCanvas.width = 500;
-	myCanvas.height = 500;
+	myCanvas.width = 700;
+	myCanvas.height = 700;
 
 	var ctx = myCanvas.getContext("2d");
 
