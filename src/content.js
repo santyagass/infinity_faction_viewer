@@ -64,11 +64,13 @@ function findFaction(nick) {
 function func() {
 	$('[ng-repeat="player in vm.classification()"]').map(function() {
 		var nick = $.trim($( this ).find('.md-list-item-inner .layout-row').text());
-		$( this ).find('.md-list-item-inner > div:first-child').addClass("faction" + findFaction(nick));
+		var factionCode = findFaction(nick);
+		$( this ).find('.md-list-item-inner > div:first-child').addClass("faction" + factionCode);
+
+		libr[factionCode].op += parseInt($(this).find('.md-list-item-inner > div:nth-child(4)').html());
+		libr[factionCode].tp += parseInt($(this).find('.md-list-item-inner > div:nth-child(3)').html());
 	});
 }
-
-
 
 function drawLine(ctx, startX, startY, endX, endY){
 	ctx.beginPath();
@@ -173,7 +175,15 @@ var Piechart = function(options){
 };
 
 function func2() {
-	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: fixed; top: 10px; left: 10px;"><button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>--></div>');
+	func();
+
+	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: fixed; top: 10px; left: 10px;">' +
+		'<button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>-->' +
+		// '<ul id="infFactionInfoPlgWUlOp" style="color: #000; float: right;"></ul>' +
+		// '<ul id="infFactionInfoPlgWUlTp" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlOpSr" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlTpSr" style="color: #000; float: right;"></ul>' +
+	'</div>');
 
 	var myCanvas = document.getElementById("myCanvas");
 	myCanvas.width = 700;
@@ -194,7 +204,6 @@ function func2() {
 		}
 		gamerWithRosters++;
 	});
-	console.log(gamerWithRosters);
 	var myVinyls = {};
 	var colors = [];
 	if ($('[ng-repeat^="item in vm.participants|orderBy"]').length > gamerWithRosters) {
@@ -218,4 +227,13 @@ function func2() {
 		}
 	);
 	myDougnutChart.draw();
+
+	var libr2 = libr;
+	Object.keys(libr2).forEach(function(elem, index) {
+		if(libr2[elem].count != 0) {
+			// $('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>' + libr2[elem].title + ': ' + libr2[elem].op + '</li>');
+			// $('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>' + libr2[elem].title + ': ' + libr2[elem].tp + '</li>');
+		}
+	});
+	console.log(libr2);
 }
