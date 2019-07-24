@@ -1,14 +1,3 @@
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		if (request.greeting == "start") {
-			func();
-		}
-		if (request.greeting == "dia") {
-			func2();
-		}
-	}
-);
-
 var libr =
 	{
 		000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#fefefe', faction: "unknown"},
@@ -50,9 +39,66 @@ var libr =
 		908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"}
 	};
 
+factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		libr =
+			{
+				000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#fefefe', faction: "unknown"},
+				101: {count: 0, op: 0, tp: 0, title: "•PanOceania", color: '#009ee4', faction: "PanOceania"},
+				102: {count: 0, op: 0, tp: 0, title: "•SAA", color: '#00a5ee', faction: "PanOceania"},
+				103: {count: 0, op: 0, tp: 0, title: "•MO", color: '#0091d0', faction: "PanOceania"},
+				104: {count: 0, op: 0, tp: 0, title: "•Neoterra", color: '#9e9ce4', faction: "PanOceania"},
+				105: {count: 0, op: 0, tp: 0, title: "•Varuna", color: '#6ad7fc', faction: "PanOceania"},
+				201: {count: 0, op: 0, tp: 0, title: "•Yu Jing", color: '#b0cb11', faction: "Yu Jing"},
+				202: {count: 0, op: 0, tp: 0, title: "•ISS", color: '#6c7c0a', faction: "Yu Jing"},
+				204: {count: 0, op: 0, tp: 0, title: "•IA", color: '#d9fa15', faction: "Yu Jing"},
+				301: {count: 0, op: 0, tp: 0, title: "•Ariadna", color: '#0b7db3', faction: "Ariadna"},
+				302: {count: 0, op: 0, tp: 0, title: "•Caledonians", color: '#0c8ecb', faction: "Ariadna"},
+				303: {count: 0, op: 0, tp: 0, title: "•FRRM", color: '#0d97d9', faction: "Ariadna"},
+				304: {count: 0, op: 0, tp: 0, title: "•USAriadna", color: '#0d9ce0', faction: "Ariadna"},
+				305: {count: 0, op: 0, tp: 0, title: "•Tartary AC", color: '#0ea3ea', faction: "Ariadna"},
+				401: {count: 0, op: 0, tp: 0, title: "•Haqqislam", color: '#ffe149', faction: "Haqqislam"},
+				402: {count: 0, op: 0, tp: 0, title: "•Hassassin Bahram", color: '#e8cd42', faction: "Haqqislam"},
+				403: {count: 0, op: 0, tp: 0, title: "•Qapu Khalqi", color: '#d6bd3c', faction: "Haqqislam"},
+				404: {count: 0, op: 0, tp: 0, title: "•Ramah", color: '#cfa12d', faction: "Haqqislam"},
+				501: {count: 0, op: 0, tp: 0, title: "•Nomads", color: '#e30b14', faction: "Nomads"},
+				502: {count: 0, op: 0, tp: 0, title: "•Corregidor", color: '#e34c31', faction: "Nomads"},
+				503: {count: 0, op: 0, tp: 0, title: "•Bakunin", color: '#e36b38', faction: "Nomads"},
+				504: {count: 0, op: 0, tp: 0, title: "•Tunguska", color: '#e38869', faction: "Nomads"},
+				601: {count: 0, op: 0, tp: 0, title: "•Combined Army", color: '#a69fd5', faction: "Combined Army"},
+				602: {count: 0, op: 0, tp: 0, title: "•Morats", color: '#9791c2', faction: "Combined Army"},
+				603: {count: 0, op: 0, tp: 0, title: "•Shasvastii", color: '#8a84b1', faction: "Combined Army"},
+				604: {count: 0, op: 0, tp: 0, title: "•Onyx", color: '#777299', faction: "Combined Army"},
+				701: {count: 0, op: 0, tp: 0, title: "•ALEPH", color: '#9baba8', faction: "ALEPH"},
+				702: {count: 0, op: 0, tp: 0, title: "•Steel Phalanx", color: '#b8cac7', faction: "ALEPH"},
+				703: {count: 0, op: 0, tp: 0, title: "•OSS", color: '#c5d9d5', faction: "ALEPH"},
+				801: {count: 0, op: 0, tp: 0, title: "•Tohaa", color: '#a4e412', faction: "Tohaa"},
+				902: {count: 0, op: 0, tp: 0, title: "•Druze BS", color: '#b6cb94', faction: "NA2"},
+				903: {count: 0, op: 0, tp: 0, title: "•JSA", color: '#e31e45', faction: "NA2"},
+				904: {count: 0, op: 0, tp: 0, title: "•Ikari", color: '#fffc1c', faction: "NA2"},
+				905: {count: 0, op: 0, tp: 0, title: "•Starco", color: '#e45d5d', faction: "NA2"},
+				906: {count: 0, op: 0, tp: 0, title: "•Spiral", color: '#b9db01', faction: "NA2"},
+				907: {count: 0, op: 0, tp: 0, title: "•Foreign", color: '#67b4b5', faction: "NA2"},
+				908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"}
+			};
+
+		factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
+		if (request.greeting == "start") {
+			func();
+		}
+		if (request.greeting == "dia") {
+			func2();
+		}
+	}
+);
+
+
+
+
 function findFaction(nick) {
 	var factionImgPath = $('[ng-repeat^="item in vm.participants|orderBy"] [aria-label^="'+ nick +'"] ~ .md-secondary-container md-icon[aria-label="faction"]').attr('md-svg-src');
-	console.log(factionImgPath);
+	//console.log(factionImgPath);
 	if (factionImgPath !== undefined) {
 		var code = factionImgPath.substr(factionImgPath.length - 7, 3);
 		return code;
@@ -94,11 +140,23 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
 	ctx.fill();
 }
 
+function sortArray(a, b, field) {
+	if (a[field] < b[field]) {
+		return 1;
+	}
+	if (a[field] > b[field]) {
+		return -1;
+	}
+	// a должно быть равным b
+	return 0;
+}
+
 var Piechart = function(options){
 	this.options = options;
 	this.canvas = options.canvas;
 	this.ctx = this.canvas.getContext("2d");
 	this.colors = options.colors;
+	this.legendData = [];
 
 	this.draw = function(){
 		var total_value = 0;
@@ -112,7 +170,7 @@ var Piechart = function(options){
 		for (categ in this.options.data){
 			val = this.options.data[categ];
 			var slice_angle = 2 * Math.PI * val / total_value;
-
+			this.legendData.push({title: categ, count: val, color: this.colors[color_index%this.colors.length]})
 			drawPieSlice(
 				this.ctx,
 				this.canvas.width/2,
@@ -166,24 +224,36 @@ var Piechart = function(options){
 		if (this.options.legend){
 			color_index = 0;
 			var legendHTML = "";
-			for (categ in this.options.data){
-				legendHTML += "<div><span style='display:inline-block;width:10px;background-color:"+this.colors[color_index++]+";'>&nbsp;</span> <span style='font-size: 12px; color: #000'>"+categ+"</span></div>";
+
+			this.legendData.sort(function (a, b) {
+				return sortArray(a,b, 'count')
+			});
+			for (index in this.legendData){
+				legendHTML += "<div><span style='display:inline-block;width:10px;background-color:"+this.legendData[index].color+";'>&nbsp;</span> <span style='font-size: 12px; color: #000'>"+this.legendData[index].title+": "+this.legendData[index].count+"</span></div>";
 			}
 			this.options.legend.innerHTML = legendHTML;
 		}
 	}
 };
 
+function compareField(elA, elB, field) {
+	return elA[field] - elB[field];
+}
+
 function func2() {
 	func();
 
 	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: fixed; top: 10px; left: 10px;">' +
-		'<button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><!--<div id="myLegend" style="float: left; padding-left: 15px;"></div>-->' +
-		// '<ul id="infFactionInfoPlgWUlOp" style="color: #000; float: right;"></ul>' +
-		// '<ul id="infFactionInfoPlgWUlTp" style="color: #000; float: right;"></ul>' +
+		'<button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><div id="myLegend" style="float: left; padding-left: 15px;"></div>' +
+		'<ul id="infFactionInfoPlgWUlOp" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlOpAv" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlTp" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlTpAv" style="color: #000; float: right;"></ul>' +
 		'<ul id="infFactionInfoPlgWUlOpSr" style="color: #000; float: right;"></ul>' +
+		'<ul id="infFactionInfoPlgWUlOpSum" style="color: #000; float: right;"></ul>' +
 		'<ul id="infFactionInfoPlgWUlTpSr" style="color: #000; float: right;"></ul>' +
-	'</div>');
+		'<ul id="infFactionInfoPlgWUlTpSum" style="color: #000; float: right;"></ul>' +
+		'</div>');
 
 	var myCanvas = document.getElementById("myCanvas");
 	myCanvas.width = 700;
@@ -198,6 +268,20 @@ function func2() {
 		var factionCode = factionImgPath.substr(factionImgPath.length - 7, 3);
 		if(libr[factionCode]) {
 			libr[factionCode].count = libr[factionCode].count ? libr[factionCode].count + 1 : 1;
+			var faction = libr[factionCode].faction;
+			if(factionStat[faction]) {
+				factionStat[faction].count = factionStat[faction].count ? factionStat[faction].count + 1 : 1;
+			}
+			else {
+				factionStat[faction] = {
+					name: faction,
+					opSum: 0,
+					tpSum: 0,
+					opSr : 0,
+					tpSr: 0,
+					count: 1
+				}
+			}
 		} else {
 			libr[factionCode] = {count: 1, title: 'NEW ITEM!'};
 			console.error('We have new image id! ', factionCode);
@@ -211,6 +295,14 @@ function func2() {
 	}
 	Object.keys(libr).forEach(function(elem, index) {
 		if(libr[elem].count != 0) {
+			var title = libr[elem].faction;
+			if(factionStat[title]) {
+				factionStat[title].opSum = factionStat[title].opSum + libr[elem].op;
+				factionStat[title].tpSum = factionStat[title].tpSum + libr[elem].tp;
+				factionStat[title].opSr = factionStat[title].opSr + libr[elem].op/factionStat[title].count;
+				factionStat[title].tpSr = factionStat[title].tpSr + libr[elem].tp/factionStat[title].count;
+				factionStat[title].count = factionStat[title].count + libr[elem].count;
+			}
 			myVinyls[libr[elem].title]=libr[elem].count;
 			colors.push(libr[elem].color);
 		}
@@ -218,22 +310,115 @@ function func2() {
 
 	var myLegend = document.getElementById("myLegend");
 
+	//console.log('myLegend', myLegend);
 	var myDougnutChart = new Piechart(
 		{
 			canvas:myCanvas,
 			data:myVinyls,
 			colors:colors,
-			// legend:myLegend
+			legend:myLegend
 		}
 	);
 	myDougnutChart.draw();
 
-	var libr2 = libr;
-	Object.keys(libr2).forEach(function(elem, index) {
-		if(libr2[elem].count != 0) {
-			// $('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>' + libr2[elem].title + ': ' + libr2[elem].op + '</li>');
-			// $('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>' + libr2[elem].title + ': ' + libr2[elem].tp + '</li>');
-		}
+
+	var libr2 = Object.values(factionStat);
+
+	libr2.sort(function (a, b) {
+		return sortArray(a,b, 'opSum')
 	});
-	console.log(libr2);
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSum').append('<li>Name: OP SUM</li>');
+	libr2.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSum').append('<li>' + elem.name + ': ' + elem.opSum + '</li>');
+		}
+	})
+	libr2.sort(function (a, b) {
+		return sortArray(a,b, 'tpSum')
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSum').append('<li>Name: TP SUM</li>');
+	libr2.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSum').append('<li>' + elem.name + ': ' + elem.tpSum + '</li>');
+		}
+	})
+	libr2.sort(function (a, b) {
+		return sortArray(a,b, 'opSr')
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li>Name: OP Average</li>');
+	libr2.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li>' + elem.name + ': ' + elem.opSr + '</li>');
+		}
+	})
+	libr2.sort(function (a, b) {
+		return sortArray(a,b, 'tpSr')
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li>Name: TP Average</li>');
+	libr2.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li>' + elem.name + ': ' + elem.tpSr + '</li>');
+		}
+	})
+
+	var libr3 = Object.values(libr);
+
+	libr3.sort(function (a, b) {
+		return sortArray(a,b, 'op')
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>Name: OP</li>');
+	libr3.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>' + elem.title + ': ' + elem.op + '</li>');
+		}
+	})
+
+
+
+	libr3.sort(function (a, b) {
+		return sortArray(a,b, 'tp')
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>Name: TP</li>');
+	libr3.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>' + elem.title + ': ' + elem.tp + '</li>');
+		}
+	})
+
+	libr3.sort(function (a, b) {
+		if (a.op/a.count < b.op/b.count) {
+			return 1;
+		}
+		if (a.op/a.count > b.op/b.count) {
+			return -1;
+		}
+		// a должно быть равным b
+		return 0;
+
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li>Name: OP Average</li>');
+	libr3.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li>' + elem.title + ': ' + elem.op/elem.count + '</li>');
+		}
+	})
+
+
+	libr3.sort(function (a, b) {
+		if (a.tp/a.count < b.tp/b.count) {
+			return 1;
+		}
+		if (a.tp/a.count > b.tp/b.count) {
+			return -1;
+		}
+		// a должно быть равным b
+		return 0;
+
+	});
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li>Name: TP Average</li>');
+	libr3.forEach(function(elem, index){
+		if(elem.count != 0) {
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li>' + elem.title + ': ' + elem.tp/elem.count + '</li>');
+		}
+	})
 }
