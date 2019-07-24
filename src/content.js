@@ -243,16 +243,26 @@ function compareField(elA, elB, field) {
 function func2() {
 	func();
 
-	$('body').append('<div id="infFactionInfoPlgW" style="position: relative; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: fixed; top: 10px; left: 10px;">' +
+	if ($('#infFactionInfoPlgW').length > 0) {
+		$('#infFactionInfoPlgW').remove();
+	}
+
+	$('body').append('<div id="infFactionInfoPlgW" style="font-size: 12px; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: absolute; top: 10px; left: 10px;">' +
 		'<button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><div id="myLegend" style="float: left; padding-left: 15px;"></div>' +
-		'<ul id="infFactionInfoPlgWUlOp" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlOpAv" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlTp" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlTpAv" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlOpSr" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlOpSum" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlTpSr" style="color: #000; float: right;"></ul>' +
-		'<ul id="infFactionInfoPlgWUlTpSum" style="color: #000; float: right;"></ul>' +
+		'<div style="float: left;">' +
+			'<div>' +
+				'<ul id="infFactionInfoPlgWUlOpAv" style="color: #000; float: right;"></ul>' +
+				'<ul id="infFactionInfoPlgWUlOp" style="color: #000; float: right;"></ul>' +
+				'<ul id="infFactionInfoPlgWUlTpAv" style="color: #000; float: right;"></ul>' +
+				'<ul id="infFactionInfoPlgWUlTp" style="color: #000; float: right;"></ul>' +
+			'</div>' +
+		'</div>' +
+		'<div style="float: left;">' +
+			'<ul id="infFactionInfoPlgWUlOpSr" style="color: #000; float: right;"></ul>' +
+			'<ul id="infFactionInfoPlgWUlOpSum" style="color: #000; float: right;"></ul>' +
+			'<ul id="infFactionInfoPlgWUlTpSr" style="color: #000; float: right;"></ul>' +
+			'<ul id="infFactionInfoPlgWUlTpSum" style="color: #000; float: right;"></ul>' +
+		'</div>' +
 		'</div>');
 
 	var myCanvas = document.getElementById("myCanvas");
@@ -327,7 +337,7 @@ function func2() {
 	libr2.sort(function (a, b) {
 		return sortArray(a,b, 'opSum')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSum').append('<li>Name: OP SUM</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSum').append('<li><b>Objective Points (SUM)</b></li>');
 	libr2.forEach(function(elem, index){
 		if(elem.count != 0) {
 			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSum').append('<li>' + elem.name + ': ' + elem.opSum + '</li>');
@@ -336,7 +346,7 @@ function func2() {
 	libr2.sort(function (a, b) {
 		return sortArray(a,b, 'tpSum')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSum').append('<li>Name: TP SUM</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSum').append('<li><b>Tournament Points (SUM)</b></li>');
 	libr2.forEach(function(elem, index){
 		if(elem.count != 0) {
 			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSum').append('<li>' + elem.name + ': ' + elem.tpSum + '</li>');
@@ -345,19 +355,19 @@ function func2() {
 	libr2.sort(function (a, b) {
 		return sortArray(a,b, 'opSr')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li>Name: OP Average</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li><b>Faction OP Average</b></li>');
 	libr2.forEach(function(elem, index){
 		if(elem.count != 0) {
-			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li>' + elem.name + ': ' + elem.opSr + '</li>');
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpSr').append('<li>' + elem.name + ': ' + (elem.opSr).toFixed(2) + '</li>');
 		}
 	})
 	libr2.sort(function (a, b) {
 		return sortArray(a,b, 'tpSr')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li>Name: TP Average</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li><b>Faction TP Average</b></li>');
 	libr2.forEach(function(elem, index){
 		if(elem.count != 0) {
-			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li>' + elem.name + ': ' + elem.tpSr + '</li>');
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpSr').append('<li>' + elem.name + ': ' + (elem.tpSr).toFixed(2) + '</li>');
 		}
 	})
 
@@ -366,7 +376,7 @@ function func2() {
 	libr3.sort(function (a, b) {
 		return sortArray(a,b, 'op')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>Name: OP</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li><b>Army OP (SUM)</b></li>');
 	libr3.forEach(function(elem, index){
 		if(elem.count != 0) {
 			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOp').append('<li>' + elem.title + ': ' + elem.op + '</li>');
@@ -378,7 +388,7 @@ function func2() {
 	libr3.sort(function (a, b) {
 		return sortArray(a,b, 'tp')
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>Name: TP</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li><b>Army TP (SUM)</b></li>');
 	libr3.forEach(function(elem, index){
 		if(elem.count != 0) {
 			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTp').append('<li>' + elem.title + ': ' + elem.tp + '</li>');
@@ -396,10 +406,10 @@ function func2() {
 		return 0;
 
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li>Name: OP Average</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li><b>Army OP Average</b></li>');
 	libr3.forEach(function(elem, index){
 		if(elem.count != 0) {
-			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li>' + elem.title + ': ' + elem.op/elem.count + '</li>');
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlOpAv').append('<li>' + elem.title + ': ' + (elem.op/elem.count).toFixed(2) + '</li>');
 		}
 	})
 
@@ -415,10 +425,10 @@ function func2() {
 		return 0;
 
 	});
-	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li>Name: TP Average</li>');
+	$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li><b>Army TP Average</b></li>');
 	libr3.forEach(function(elem, index){
 		if(elem.count != 0) {
-			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li>' + elem.title + ': ' + elem.tp/elem.count + '</li>');
+			$('#infFactionInfoPlgW #infFactionInfoPlgWUlTpAv').append('<li>' + elem.title + ': ' + (elem.tp/elem.count).toFixed(2) + '</li>');
 		}
 	})
 }
