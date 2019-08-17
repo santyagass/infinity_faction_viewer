@@ -154,6 +154,10 @@
     background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_907.svg) 30px center no-repeat;
     background-size: 24px 24px;
 }
+[class*='faction908'] {
+    background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_908.svg) 30px center no-repeat;
+    background-size: 24px 24px;
+}
 
 
 [md-svg-src="/images/logos/logo_105.svg"] {
