@@ -1,6 +1,6 @@
 var libr =
 	{
-		000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#fefefe', faction: "unknown"},
+		000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#eeeeee', faction: "unknown"},
 		101: {count: 0, op: 0, tp: 0, title: "•PanOceania", color: '#009ee4', faction: "PanOceania"},
 		102: {count: 0, op: 0, tp: 0, title: "•SAA", color: '#00a5ee', faction: "PanOceania"},
 		103: {count: 0, op: 0, tp: 0, title: "•MO", color: '#0091d0', faction: "PanOceania"},
@@ -36,7 +36,8 @@ var libr =
 		905: {count: 0, op: 0, tp: 0, title: "•Starco", color: '#e45d5d', faction: "NA2"},
 		906: {count: 0, op: 0, tp: 0, title: "•Spiral", color: '#b9db01', faction: "NA2"},
 		907: {count: 0, op: 0, tp: 0, title: "•Foreign", color: '#67b4b5', faction: "NA2"},
-		908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"}
+		908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"},
+		1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"}
 	};
 
 factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
@@ -44,7 +45,7 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		libr =
 			{
-				000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#fefefe', faction: "unknown"},
+				000: {count: 0, op: 0, tp: 0, title: "•unknown", color: '#eeeeee', faction: "unknown"},
 				101: {count: 0, op: 0, tp: 0, title: "•PanOceania", color: '#009ee4', faction: "PanOceania"},
 				102: {count: 0, op: 0, tp: 0, title: "•SAA", color: '#00a5ee', faction: "PanOceania"},
 				103: {count: 0, op: 0, tp: 0, title: "•MO", color: '#0091d0', faction: "PanOceania"},
@@ -80,7 +81,8 @@ chrome.runtime.onMessage.addListener(
 				905: {count: 0, op: 0, tp: 0, title: "•Starco", color: '#e45d5d', faction: "NA2"},
 				906: {count: 0, op: 0, tp: 0, title: "•Spiral", color: '#b9db01', faction: "NA2"},
 				907: {count: 0, op: 0, tp: 0, title: "•Foreign", color: '#67b4b5', faction: "NA2"},
-				908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"}
+				908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"},
+				1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"}
 			};
 
 		factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
@@ -88,7 +90,14 @@ chrome.runtime.onMessage.addListener(
 			func();
 		}
 		if (request.greeting == "dia") {
-			func2();
+			if ($('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type:not(.md-active)').length > 0) {
+				$('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type').trigger( "click" );
+				setTimeout(function () {
+					func2();
+				}, 3500);
+			} else {
+				func2();
+			}
 		}
 	}
 );
@@ -101,9 +110,10 @@ function findFaction(nick) {
 	//console.log(factionImgPath);
 	if (factionImgPath !== undefined) {
 		var code = factionImgPath.substr(factionImgPath.length - 7, 3);
+		if (code == 001) { code = 1001 }
 		return code;
 	} else {
-		return "000";
+		return 000;
 	}
 }
 
@@ -272,11 +282,15 @@ function func2() {
 	var ctx = myCanvas.getContext("2d");
 
 	var gamerWithRosters = 0;
+	console.log('libr ', libr);
 
 	$('[ng-if="item.lists.faction"]').each(function() {
 		var factionImgPath = $(this).attr('md-svg-src');
 		var factionCode = factionImgPath.substr(factionImgPath.length - 7, 3);
+		if (factionCode == 001) { factionCode = 1001 }
 		if(libr[factionCode]) {
+			console.log('id = ', factionCode);
+			console.log('libr id = ', libr[factionCode]);
 			libr[factionCode].count = libr[factionCode].count ? libr[factionCode].count + 1 : 1;
 			var faction = libr[factionCode].faction;
 			if(factionStat[faction]) {

@@ -1,3 +1,7 @@
+[class*='faction1001'] {
+    background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_1001.svg) 30px center no-repeat;
+    background-size: 24px 24px;
+}
 [class*='faction101'] {
     background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_101.svg) 30px center no-repeat;
     background-size: 24px 24px;
@@ -160,6 +164,10 @@
 }
 
 
+[md-svg-src="/images/logos/logo_1001.svg"] {
+    background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_1001.svg) 0 0 no-repeat;
+    background-size: 24px 24px;
+}
 [md-svg-src="/images/logos/logo_105.svg"] {
     background: url(https://assets.infinitythegame.net/infinityarmy/img/logos/logo_105.svg) 0 0 no-repeat;
     background-size: 24px 24px;
