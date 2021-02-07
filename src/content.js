@@ -51,14 +51,17 @@ chrome.runtime.onMessage.addListener(
 				103: {count: 0, op: 0, tp: 0, title: "•MO", color: '#0091d0', faction: "PanOceania"},
 				104: {count: 0, op: 0, tp: 0, title: "•Neoterra", color: '#9e9ce4', faction: "PanOceania"},
 				105: {count: 0, op: 0, tp: 0, title: "•Varuna", color: '#6ad7fc', faction: "PanOceania"},
+				106: {count: 0, op: 0, tp: 0, title: "•Svalarheima WF", color: '#afeaff', faction: "PanOceania"},
 				201: {count: 0, op: 0, tp: 0, title: "•Yu Jing", color: '#b0cb11', faction: "Yu Jing"},
 				202: {count: 0, op: 0, tp: 0, title: "•ISS", color: '#6c7c0a', faction: "Yu Jing"},
 				204: {count: 0, op: 0, tp: 0, title: "•IA", color: '#d9fa15', faction: "Yu Jing"},
+				205: {count: 0, op: 0, tp: 0, title: "•White Banner", color: '#e8f6a5', faction: "Yu Jing"},
 				301: {count: 0, op: 0, tp: 0, title: "•Ariadna", color: '#0b7db3', faction: "Ariadna"},
 				302: {count: 0, op: 0, tp: 0, title: "•Caledonians", color: '#0c8ecb', faction: "Ariadna"},
 				303: {count: 0, op: 0, tp: 0, title: "•FRRM", color: '#0d97d9', faction: "Ariadna"},
 				304: {count: 0, op: 0, tp: 0, title: "•USAriadna", color: '#0d9ce0', faction: "Ariadna"},
 				305: {count: 0, op: 0, tp: 0, title: "•Tartary AC", color: '#0ea3ea', faction: "Ariadna"},
+				306: {count: 0, op: 0, tp: 0, title: "•Kosmoflot", color: '#0ea3ea', faction: "Ariadna"},
 				401: {count: 0, op: 0, tp: 0, title: "•Haqqislam", color: '#ffe149', faction: "Haqqislam"},
 				402: {count: 0, op: 0, tp: 0, title: "•Hassassin Bahram", color: '#e8cd42', faction: "Haqqislam"},
 				403: {count: 0, op: 0, tp: 0, title: "•Qapu Khalqi", color: '#d6bd3c', faction: "Haqqislam"},
@@ -82,28 +85,34 @@ chrome.runtime.onMessage.addListener(
 				906: {count: 0, op: 0, tp: 0, title: "•Spiral", color: '#b9db01', faction: "NA2"},
 				907: {count: 0, op: 0, tp: 0, title: "•Foreign", color: '#67b4b5', faction: "NA2"},
 				908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"},
-				1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"}
+				909: {count: 0, op: 0, tp: 0, title: "•White Company", color: '#efefef', faction: "NA2"},
+				1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"},
+				1002: {count: 0, op: 0, tp: 0, title: "•Starmada", color: '#ec974c', faction: "O-12"}
 			};
 
 		factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
 		if (request.greeting == "start") {
-			func();
+			if ($('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type:not(.md-active)').length > 0) {
+				$('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type').trigger( "click" );
+				setTimeout(function () {
+					func();
+				}, 1500);
+			} else {
+				func();
+			}
 		}
 		if (request.greeting == "dia") {
 			if ($('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type:not(.md-active)').length > 0) {
 				$('[ng-click="$mdTabsCtrl.select(tab.getIndex())"]:last-of-type').trigger( "click" );
 				setTimeout(function () {
 					func2();
-				}, 3500);
+				}, 1500);
 			} else {
 				func2();
 			}
 		}
 	}
 );
-
-
-
 
 function findFaction(nick) {
 	var factionImgPath = $('[ng-repeat^="item in vm.participants|orderBy"] [aria-label^="'+ nick +'"] ~ .md-secondary-container md-icon[aria-label="faction"]').attr('md-svg-src');
@@ -257,7 +266,7 @@ function func2() {
 		$('#infFactionInfoPlgW').remove();
 	}
 
-	$('body').append('<div id="infFactionInfoPlgW" style="font-size: 12px; box-sizing: border-box; background-color: #fff; width: auto; height: auto; padding: 10px; position: absolute; top: 10px; left: 10px;">' +
+	$('body').append('<div id="infFactionInfoPlgW" style="font-size: 12px; box-sizing: border-box; background-color: #fff; z-index: 10; width: auto; height: auto; padding: 10px; position: absolute; top: 10px; left: 10px;">' +
 		'<button style="border: 1px solid #f0f0f0; padding: 0;" onclick="var elem = document.querySelector(\'#infFactionInfoPlgW\'); elem.remove();"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAMAAADL21gSAAAAFVBMVEUAAAAgICAwMDBAQEDf39/v7+/////kfkc3AAAAaUlEQVR4Ae3SOwoCMBCE4ck+vP+RjT+CCFMsBLHJVCk+Qnayegxy0a9QrWgOnascwkioDgll0Daol9nKoxSqMAqPOvRJtEMoY0BGYSwi9UaMdnDT5E2j6eKrpzxofPB3qNwGhfnXZl70BDfXGiu8gCfFAAAAAElFTkSuQmCC" alt=""></button><canvas id="myCanvas" style="float: left; max-height: calc(100vh - 70px);"></canvas><div id="myLegend" style="float: left; padding-left: 15px;"></div>' +
 		'<div style="float: left;">' +
 			'<div>' +
