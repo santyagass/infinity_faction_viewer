@@ -37,7 +37,8 @@ var libr =
 		906: {count: 0, op: 0, tp: 0, title: "•Spiral", color: '#b9db01', faction: "NA2"},
 		907: {count: 0, op: 0, tp: 0, title: "•Foreign", color: '#67b4b5', faction: "NA2"},
 		908: {count: 0, op: 0, tp: 0, title: "•Dahshat", color: '#cbbe7f', faction: "NA2"},
-		1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"}
+		1001: {count: 0, op: 0, tp: 0, title: "•O-12", color: '#dfa532', faction: "O-12"},
+		1002: {count: 0, op: 0, tp: 0, title: "•Starmada", color: '#ec974c', faction: "O-12"}
 	};
 
 factionStat = {"unknown": {name: "unknown", opSum:0, tpSum: 0, opSr : 0, tpSr: 0, count: 0}};
@@ -120,6 +121,7 @@ function findFaction(nick) {
 	if (factionImgPath !== undefined) {
 		var code = factionImgPath.substr(factionImgPath.length - 7, 3);
 		if (code == 001) { code = 1001 }
+		if (code == 002) { code = 1002 } //for factions with 100x code
 		return code;
 	} else {
 		return 000;
