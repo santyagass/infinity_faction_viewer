@@ -299,6 +299,7 @@ function func2() {
 		var factionImgPath = $(this).attr('md-svg-src');
 		var factionCode = factionImgPath.substr(factionImgPath.length - 7, 3);
 		if (factionCode == 001) { factionCode = 1001 }
+		if (factionCode == 002) { factionCode = 1002 }
 		if(libr[factionCode]) {
 			console.log('id = ', factionCode);
 			console.log('libr id = ', libr[factionCode]);
